@@ -8,7 +8,7 @@ final themeData = ThemeData(
     color: Colors.grey.withOpacity(0.5),
     thickness: 1.0,
   ),
-  listTileTheme: ListTileThemeData(
+  listTileTheme: const ListTileThemeData(
     iconColor: Colors.black,
   ),
   appBarTheme: const AppBarTheme(
@@ -20,7 +20,7 @@ final themeData = ThemeData(
     backgroundColor: Colors.amber,
   ),
   textTheme: TextTheme(
-    headlineLarge: TextStyle(
+    headlineLarge: const TextStyle(
       fontWeight: FontWeight.w700,
       color: Colors.black,
     ),
