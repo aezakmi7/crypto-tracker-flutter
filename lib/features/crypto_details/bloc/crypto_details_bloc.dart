@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get_it/get_it.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 import '../../../repositories/crypto_coins/crypto_coins.dart';
 import '../../../repositories/crypto_coins/models/crypto_details.dart';
@@ -29,6 +31,7 @@ class CryptoDetailsBloc extends Bloc<CryptoDetailsEvent, CryptoDetailsState> {
       emit(CryptoDetailsLoaded(coinDetails: coinDetails));
     } catch (e) {
       emit(CryptoDetailsError(error: e));
+      GetIt.I<Talker>().error(e.toString());
     }
   }
 }

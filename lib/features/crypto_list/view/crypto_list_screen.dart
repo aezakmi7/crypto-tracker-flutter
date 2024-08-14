@@ -31,6 +31,12 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.analytics_outlined),
+          )
+        ],
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(

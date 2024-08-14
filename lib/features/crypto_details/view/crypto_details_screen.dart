@@ -55,13 +55,18 @@ class _CryptoDetailsScreenState extends State<CryptoDetailsScreen> {
                     style: const TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w700,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 8),
                   BaseCard(
                     child: Center(
                       child: Text('${coinDetails.priceInUSD} \$',
-                          style: themeData.textTheme.labelLarge),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          )),
                     ),
                   ),
                   BaseCard(
