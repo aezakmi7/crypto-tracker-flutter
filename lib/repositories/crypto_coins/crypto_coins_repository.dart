@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'abstract_coins_repository.dart';
 import 'models/crypto_detail.dart';
 import 'models/crypto_model.dart';
@@ -6,9 +7,11 @@ import 'models/crypto_model.dart';
 class CryptoCoinsRepository implements AbstractCoinsRepository {
   CryptoCoinsRepository({
     required this.dio,
+    required this.cryptoCoinsBox,
   });
 
   final Dio dio;
+  final Box<CryptoCoin> cryptoCoinsBox;
 
   @override
   Future<List<CryptoCoin>> getCoinsList() async {
@@ -23,14 +26,9 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
 
       final detail = CryptoDetail.fromJson(usdData);
 
-      // final priceInUSD = double.parse(usdData['PRICE'].toStringAsFixed(2));
-      // final imageURL = usdData['IMAGEURL'] as String;
-
       return CryptoCoin(
         name: entry.key,
         detail: detail,
-        // priceInUSD: priceInUSD,
-        // imageURL: 'https://www.cryptocompare.com/$imageURL',
       );
     }).toList();
     return cryptoCoinsList;
@@ -46,22 +44,10 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     final coinData = dataRaw[currencyCode] as Map<String, dynamic>;
     final usdData = coinData['USD'] as Map<String, dynamic>;
     final detail = CryptoDetail.fromJson(usdData);
-    // final price = double.parse(usdData['PRICE'].toStringAsFixed(2));
-    // final hight24Hour = double.parse(usdData['HIGH24HOUR'].toStringAsFixed(2));
-    // final low24Hours = double.parse(usdData['LOW24HOUR'].toStringAsFixed(2));
-    // final imageUrl = usdData['IMAGEURL'];
-    // final toSymbol = usdData['TOSYMBOL'];
-    // final lastUpdate = usdData['LASTUPDATE'];
 
     return CryptoCoin(
       name: currencyCode,
       detail: detail,
-      // priceInUSD: price,
-      // imageURL: 'https://www.cryptocompare.com/$imageUrl',
-      // toSymbol: toSymbol,
-      // lastUpdate: DateTime.fromMillisecondsSinceEpoch(lastUpdate),
-      // hight24Hour: hight24Hour,
-      // low24Hours: low24Hours,
     );
   }
 }
