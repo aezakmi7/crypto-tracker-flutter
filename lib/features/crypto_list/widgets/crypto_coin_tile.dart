@@ -11,15 +11,16 @@ class CryptoCoinTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final coinDetail = coin.detail;
     return ListTile(
       title: Text(
         coin.name,
         style: Theme.of(context).textTheme.bodyLarge,
       ),
-      subtitle: Text('\$${coin.priceInUSD.toString()}',
+      subtitle: Text('\$${coinDetail.priceInUSD.toString()}',
           style: Theme.of(context).textTheme.bodyMedium),
       leading: Image.network(
-        coin.imageURL,
+        coinDetail.fullImageUrl,
       ),
       trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {

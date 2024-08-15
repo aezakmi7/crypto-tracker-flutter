@@ -1,10 +1,8 @@
-import 'package:crypto_tracker_flutter/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../repositories/crypto_coins/crypto_coins.dart';
-import '../../../repositories/crypto_coins/models/models.dart';
 import '../bloc/crypto_details_bloc.dart';
 import '../widgets/base_card.dart';
 
@@ -38,7 +36,9 @@ class _CryptoDetailsScreenState extends State<CryptoDetailsScreen> {
         bloc: _coinDetailsBloc,
         builder: (context, state) {
           if (state is CryptoDetailsLoaded) {
-            final coinDetails = state.coinDetails;
+            final coin = state.coin;
+            final coinDetails = coin.detail;
+
             return Center(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,11 +47,11 @@ class _CryptoDetailsScreenState extends State<CryptoDetailsScreen> {
                   SizedBox(
                     height: 160,
                     width: 160,
-                    child: Image.network(coinDetails.imageURL),
+                    child: Image.network(coinDetails.fullImageUrl),
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    coinDetails.name,
+                    coin.name,
                     style: const TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w700,

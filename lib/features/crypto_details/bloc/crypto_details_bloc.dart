@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 import '../../../repositories/crypto_coins/crypto_coins.dart';
-import '../../../repositories/crypto_coins/models/crypto_details.dart';
+import '../../../repositories/crypto_coins/models/crypto_detail.dart';
 
 part 'crypto_details_event.dart';
 part 'crypto_details_state.dart';
@@ -28,7 +28,7 @@ class CryptoDetailsBloc extends Bloc<CryptoDetailsEvent, CryptoDetailsState> {
       final coinDetails =
           await coinsRepository.getCoinDetails(event.currencyCode);
 
-      emit(CryptoDetailsLoaded(coinDetails: coinDetails));
+      emit(CryptoDetailsLoaded(coin: coinDetails));
     } catch (e) {
       emit(CryptoDetailsError(error: e));
       GetIt.I<Talker>().error(e.toString());

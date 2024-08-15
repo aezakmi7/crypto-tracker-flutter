@@ -13,13 +13,13 @@ class CryptoDetailsLoading extends CryptoDetailsState {
 
 class CryptoDetailsLoaded extends CryptoDetailsState {
   const CryptoDetailsLoaded({
-    required this.coinDetails,
+    required this.coin,
   });
 
-  final CryptoCoinDetail coinDetails;
+  final CryptoCoin coin;
 
   @override
-  List<Object?> get props => [coinDetails];
+  List<Object?> get props => [coin];
 }
 
 class CryptoDetailsError extends CryptoDetailsState {
