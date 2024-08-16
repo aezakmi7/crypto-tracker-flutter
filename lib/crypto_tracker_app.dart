@@ -4,18 +4,26 @@ import 'package:talker_flutter/talker_flutter.dart';
 import 'core/core.dart';
 import 'core/routes/routes.dart';
 
-class CryptoTrackerApp extends StatelessWidget {
+class CryptoTrackerApp extends StatefulWidget {
   const CryptoTrackerApp({super.key});
 
   @override
+  State<CryptoTrackerApp> createState() => _CryptoTrackerAppState();
+}
+
+class _CryptoTrackerAppState extends State<CryptoTrackerApp> {
+  final _appRouter = AppRouter();
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       theme: themeData,
       debugShowCheckedModeBanner: false,
-      routes: routes,
-      navigatorObservers: [
-        TalkerRouteObserver(GetIt.I<Talker>()),
-      ],
+      routerConfig: _appRouter.config(
+        navigatorObservers: () => [
+          TalkerRouteObserver(GetIt.I<Talker>()),
+        ],
+      ),
     );
   }
 }

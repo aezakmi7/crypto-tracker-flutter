@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -6,26 +7,25 @@ import '../../../repositories/crypto_coins/crypto_coins.dart';
 import '../bloc/crypto_details_bloc.dart';
 import '../widgets/base_card.dart';
 
+@RoutePage()
 class CryptoDetailsScreen extends StatefulWidget {
-  const CryptoDetailsScreen({super.key});
+  const CryptoDetailsScreen({super.key, required this.coin});
+
+  final CryptoCoin coin;
 
   @override
   State<CryptoDetailsScreen> createState() => _CryptoDetailsScreenState();
 }
 
 class _CryptoDetailsScreenState extends State<CryptoDetailsScreen> {
-  CryptoCoin? coin;
-
   final _coinDetailsBloc = CryptoDetailsBloc(
     GetIt.I<AbstractCoinsRepository>(),
   );
+
   @override
-  void didChangeDependencies() {
-    final args = ModalRoute.of(context)?.settings.arguments;
-    assert(args != null && args is CryptoCoin, 'You must provide String args');
-    coin = args as CryptoCoin;
-    _coinDetailsBloc.add(LoadCryptoDetails(coin!.name));
-    super.didChangeDependencies();
+  void initState() {
+    _coinDetailsBloc.add(LoadCryptoDetails(widget.coin.name));
+    super.initState();
   }
 
   @override

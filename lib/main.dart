@@ -15,43 +15,47 @@ import 'repositories/crypto_coins/crypto_coins.dart';
 import 'repositories/crypto_coins/models/crypto_detail.dart';
 
 Future<void> main() async {
-  final talker = TalkerFlutter.init();
-  GetIt.I.registerSingleton(talker);
-  GetIt.I<Talker>().debug('Talker started...');
-
-  Bloc.observer = TalkerBlocObserver(talker: talker);
-
-  await Hive.initFlutter();
-  Hive.registerAdapter(CryptoCoinAdapter());
-  Hive.registerAdapter(CryptoDetailAdapter());
-
-  final cryptoCoinsBox = await Hive.openBox<CryptoCoin>('crypto_coins_box');
-
-  final dio = Dio();
-  dio.interceptors.add(
-    TalkerDioLogger(
-      talker: talker,
-      settings: const TalkerDioLoggerSettings(
-        printResponseData: false,
-      ),
-    ),
-  );
-
-  GetIt.I.registerLazySingleton<AbstractCoinsRepository>(
-    () => CryptoCoinsRepository(dio: dio, cryptoCoinsBox: cryptoCoinsBox),
-  );
-
-  FlutterError.onError = (details) {
-    GetIt.I<Talker>().error(details.exceptionAsString());
-  };
-
-  final app = await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  talker.info(app.options.projectId);
-
-  runZonedGuarded(() => runApp(const CryptoTrackerApp()), (error, stack) {
+  runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
+    final talker = TalkerFlutter.init();
+    GetIt.I.registerSingleton(talker);
+    GetIt.I<Talker>().debug('Talker started...');
+
+    Bloc.observer = TalkerBlocObserver(talker: talker);
+
+    await Hive.initFlutter();
+    Hive.registerAdapter(CryptoCoinAdapter());
+    Hive.registerAdapter(CryptoDetailAdapter());
+
+    const String hiveCryptoCoinsBox = 'cryptoCoinsBox';
+
+    final cryptoCoinsBox = await Hive.openBox<CryptoCoin>(hiveCryptoCoinsBox);
+
+    final dio = Dio();
+    dio.interceptors.add(
+      TalkerDioLogger(
+        talker: talker,
+        settings: const TalkerDioLoggerSettings(
+          printResponseData: false,
+        ),
+      ),
+    );
+
+    GetIt.I.registerLazySingleton<AbstractCoinsRepository>(
+      () => CryptoCoinsRepository(dio: dio, cryptoCoinsBox: cryptoCoinsBox),
+    );
+
+    FlutterError.onError = (details) {
+      GetIt.I<Talker>().error(details.exceptionAsString());
+    };
+
+    final app = await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    talker.info(app.options.projectId);
+
+    runApp(const CryptoTrackerApp());
+  }, (error, stack) {
     GetIt.I<Talker>().error(error.toString());
   });
 }
