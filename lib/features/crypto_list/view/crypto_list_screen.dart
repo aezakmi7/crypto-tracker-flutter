@@ -18,6 +18,7 @@ class CryptoListScreen extends StatefulWidget {
 }
 
 class _CryptoListScreenState extends State<CryptoListScreen> {
+  // ignore: unused_field
   List<CryptoCoin>? _cryptoCoinsList;
 
   final _cryptoListBloc = CryptoListBloc(

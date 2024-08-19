@@ -9,5 +9,6 @@ class LoadCryptoList extends CryptoListEvent {
   final Completer? completer;
 
   @override
+  // ignore: override_on_non_overriding_member
   List<Object?> get props => [completer];
 }

@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 import '../../../repositories/crypto_coins/crypto_coins.dart';
-import '../../../repositories/crypto_coins/models/crypto_detail.dart';
 
 part 'crypto_details_event.dart';
 part 'crypto_details_state.dart';
